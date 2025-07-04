@@ -29,17 +29,11 @@ export class AuthController {
   @Post('login')
   async login(@Body() payload: UserLoginPayload) {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const token = await this.authService.login(payload);
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      if (!token || token.error) {
+
+      if (!token) {
         // Gestion des erreurs retournées par Keycloak
-        if (token.error === 'invalid_grant') {
-          throw new UnauthorizedException('Invalid credentials');
-        }
-        throw new BadRequestException(
-          token.error_description || 'Authentication failed',
-        );
+        throw new UnauthorizedException('Invalid credentials');
       }
       return token;
     } catch (error) {
