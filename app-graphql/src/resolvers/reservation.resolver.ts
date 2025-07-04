@@ -9,7 +9,6 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Observable } from 'rxjs';
 import { Repository } from 'typeorm';
 import { CreateReservationInput } from '../dto/create-reservation.input';
 import { UpdateReservationInput } from '../dto/update-reservation.input';
@@ -52,15 +51,15 @@ export class ReservationType {
   rooms: RoomType[];
 }
 
-interface NotificationService {
-  createNotification(data: any): Observable<any>;
-  updateNotification(data: any): Observable<any>;
-  getNotification(data: any): Observable<any>;
-}
+// interface NotificationService {
+//   createNotification(data: any): Observable<any>;
+//   updateNotification(data: any): Observable<any>;
+//   getNotification(data: any): Observable<any>;
+// }
 
 @Resolver(() => ReservationType)
 export class ReservationResolver {
-  private notificationService: NotificationService;
+  // private notificationService: NotificationService;
   constructor(
     // @Inject('NOTIFICATION_PROTO_PACKAGE')
     // private readonly notificationClientGRPC: ClientGrpc,
@@ -86,11 +85,12 @@ export class ReservationResolver {
   async createReservation(
     @Args('input') input: CreateReservationInput,
   ): Promise<ReservationsEntity> {
+    console.log(input);
     const reservation = this.reservationRepository.create(input);
-    this.notificationService.createNotification({
-      reservation_id: reservation.id,
-      message: 'Reservation created',
-    });
+    // this.notificationService.createNotification({
+    //   reservation_id: reservation.id,
+    //   message: 'Reservation created',
+    // });
 
     return this.reservationRepository.save(reservation);
   }
@@ -102,10 +102,10 @@ export class ReservationResolver {
     @Args('input') input: UpdateReservationInput,
   ): Promise<ReservationsEntity> {
     await this.reservationRepository.update(id, input);
-    this.notificationService.updateNotification({
-      reservation_id: id,
-      message: 'Reservation updated',
-    });
+    // this.notificationService.updateNotification({
+    //   reservation_id: id,
+    //   message: 'Reservation updated',
+    // });
     const room = await this.reservationRepository.findOne({ where: { id } });
     if (!room) {
       throw new Error(`Room with ID ${id} not found`);

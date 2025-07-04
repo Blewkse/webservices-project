@@ -1,13 +1,13 @@
 import {
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  ManyToOne,
+  Entity,
   JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
-import { UserEntity } from './user.entity'; // Assurez-vous que le chemin est correct
 import { RoomEntity } from './room.entity';
+import { UserEntity } from './user.entity'; // Assurez-vous que le chemin est correct
 
 @Entity('reservations')
 export class ReservationsEntity {
@@ -18,9 +18,12 @@ export class ReservationsEntity {
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 
+  @Column()
+  user_id: string;
+
   @ManyToOne(() => RoomEntity, (room) => room.id, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'room_id' })
-  room: UserEntity;
+  room: RoomEntity;
 
   @Column()
   room_id: string;
