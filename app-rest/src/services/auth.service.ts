@@ -31,7 +31,7 @@ export class AuthService {
       });
     res.redirect(authorizationUrl);
   }
-  async login(userLoginPayload: UserLoginPayload) {
+  async login(userLoginPayload: UserLoginPayload): Promise<string> {
     const formData = new URLSearchParams({
       client_id: this.CLIENT_ID,
       client_secret: this.CLIENT_SECRET,
