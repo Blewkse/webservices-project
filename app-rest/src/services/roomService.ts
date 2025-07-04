@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { RoomEntity } from 'src/entities/room.entity';
 import { Repository } from 'typeorm';
-import { CreateRoomDto } from '../dto/create-room.dto';
-import { UpdateRoomDto } from '../dto/update-room.dto';
+import { RoomEntity } from 'src/entities/room.entity';
+import { UpdateRoomDto } from 'src/rest/dto/update-room.dto';
+import { CreateRoomDto } from 'src/rest/dto/create-room.dto';
+import { validate as isUuid } from 'uuid';
 
 @Injectable()
 export class RoomService {
@@ -25,6 +28,9 @@ export class RoomService {
 
   // Find one room by ID
   async findOne(id: string): Promise<RoomEntity> {
+    if (!isUuid(id)) {
+      throw new NotFoundException(`Room with ID ${id} not found`);
+    }
     const room = await this.roomRepository.findOne({ where: { id } });
     if (!room) {
       throw new NotFoundException(`Room with ID ${id} not found`);
