@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import {
   BadRequestException,
   Body,
@@ -29,6 +30,7 @@ export class AuthController {
   @Post('login')
   async login(@Body() payload: UserLoginPayload) {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const token = await this.authService.login(payload);
 
       if (!token) {
