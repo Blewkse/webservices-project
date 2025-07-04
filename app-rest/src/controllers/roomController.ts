@@ -1,20 +1,20 @@
 import {
+  Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
   Post,
-  Delete,
-  Body,
   UseGuards,
 } from '@nestjs/common';
 
-import { RoomService } from '../services/roomService';
-import { RoomEntity } from 'src/entities/room.entity';
-import { UpdateRoomDto } from '../dto/update-room.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { RoomEntity } from 'src/entities/room.entity';
 import { CreateRoomDto } from '../dto/create-room.dto';
+import { UpdateRoomDto } from '../dto/update-room.dto';
+import { AuthGuard } from '../guard/auth.guard';
+import { RoomService } from '../services/roomService';
 
 @ApiBearerAuth()
 @ApiTags('rooms') // Ajoute une catégorie "rooms" dans Swagger

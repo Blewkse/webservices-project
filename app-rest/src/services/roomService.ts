@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { RoomEntity } from 'src/entities/room.entity';
-import { UpdateRoomDto } from 'src/rest/dto/update-room.dto';
-import { CreateRoomDto } from 'src/rest/dto/create-room.dto';
+import { Repository } from 'typeorm';
+import { CreateRoomDto } from '../dto/create-room.dto';
+import { UpdateRoomDto } from '../dto/update-room.dto';
 
 @Injectable()
 export class RoomService {
