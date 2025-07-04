@@ -1,4 +1,4 @@
-import { Inject, UseGuards } from '@nestjs/common';
+import { UseGuards } from '@nestjs/common';
 import {
   Args,
   Field,
@@ -8,7 +8,6 @@ import {
   Query,
   Resolver,
 } from '@nestjs/graphql';
-import { ClientGrpc } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Observable } from 'rxjs';
 import { Repository } from 'typeorm';
@@ -63,17 +62,17 @@ interface NotificationService {
 export class ReservationResolver {
   private notificationService: NotificationService;
   constructor(
-    @Inject('NOTIFICATION_PROTO_PACKAGE')
-    private readonly notificationClientGRPC: ClientGrpc,
+    // @Inject('NOTIFICATION_PROTO_PACKAGE')
+    // private readonly notificationClientGRPC: ClientGrpc,
     @InjectRepository(ReservationsEntity)
     private readonly reservationRepository: Repository<ReservationsEntity>,
   ) {}
 
   onModuleInit() {
-    this.notificationService =
-      this.notificationClientGRPC.getService<NotificationService>(
-        'NotificationService',
-      );
+    // this.notificationService =
+    //   this.notificationClientGRPC.getService<NotificationService>(
+    //     'NotificationService',
+    //   );
   }
 
   @Query(() => [ReservationType])

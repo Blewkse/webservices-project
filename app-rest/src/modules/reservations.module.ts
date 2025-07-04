@@ -2,11 +2,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ReservationsEntity } from 'src/entities/reservation.entity';
-import { ReservationService } from '../services/reservationServices';
 import { ReservationController } from '../controllers/reservationController';
+import { ReservationService } from '../services/reservationServices';
+import { AuthModule } from './auth.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ReservationsEntity])],
+  imports: [TypeOrmModule.forFeature([ReservationsEntity]), AuthModule],
   controllers: [ReservationController],
   providers: [ReservationService],
 })
